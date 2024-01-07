@@ -31,7 +31,7 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->spa()
             ->font('Poppins')
-            ->darkMode(false)
+            ->darkMode(true)
             ->profile()
             ->sidebarCollapsibleOnDesktop()
             ->colors([
