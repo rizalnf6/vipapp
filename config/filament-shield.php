@@ -1,5 +1,7 @@
 <?php
 
+use App\Enums\Roles;
+
 return [
     'shield_resource' => [
         'should_register_navigation' => true,
@@ -9,6 +11,7 @@ return [
         'navigation_group' => true,
         'is_globally_searchable' => false,
         'show_model_path' => true,
+        'is_scoped_to_tenant' => true,
     ],
 
     'auth_provider_model' => [
@@ -17,9 +20,14 @@ return [
 
     'super_admin' => [
         'enabled' => true,
-        'name' => 'super_admin',
+        'name' => Roles::SUPER_ADMIN,
         'define_via_gate' => false,
         'intercept_gate' => 'before', // after
+    ],
+
+    'panel_user' => [
+        'enabled' => true,
+        'name' => Roles::USER,
     ],
 
     'permission_prefixes' => [
@@ -51,6 +59,7 @@ return [
 
     'generator' => [
         'option' => 'policies_and_permissions',
+        'policy_directory' => 'Policies',
     ],
 
     'exclude' => [
@@ -74,7 +83,7 @@ return [
     ],
 
     'register_role_policy' => [
-        'enabled' => true,
+        'enabled' => false,
     ],
 
 ];
