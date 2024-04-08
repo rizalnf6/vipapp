@@ -7,5 +7,6 @@ use BenSampo\Enum\Enum;
 final class Roles extends Enum
 {
     const SUPER_ADMIN = "Super Admin";
+    const ADMIN = "Admin";
     const USER = "User";
 }
