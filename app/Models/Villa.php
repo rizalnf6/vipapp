@@ -32,9 +32,9 @@ class Villa extends Model
         return $this->hasOne(Agreement::class);
     }
 
-    public function licence(): HasOne
+    public function insurance(): HasOne
     {
-        return $this->hasOne(Licence::class);
+        return $this->hasOne(Insurance::class);
     }
 
     public function consultant(): HasOne

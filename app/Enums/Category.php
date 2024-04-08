@@ -10,5 +10,4 @@ final class Category extends Enum
 {
     const Management = 'Management';
     const NonManagement = 'Non Management';
-    const Archived = 'Archived';
 }

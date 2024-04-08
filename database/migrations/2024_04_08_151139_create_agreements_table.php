@@ -19,7 +19,7 @@ return new class extends Migration
             $table->boolean('fix_monthly_fee');
             $table->integer('agent_fee');
             $table->integer('other_commision');
-            $table->string('aggrement_document');
+            $table->string('agreement_document');
             $table->timestamps();
         });
     }
