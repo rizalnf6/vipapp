@@ -14,7 +14,7 @@ class Villa extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
-        'reantal_date' => 'datetime'
+        'rental_date' => 'datetime'
     ];
 
     public function owner(): HasOne
