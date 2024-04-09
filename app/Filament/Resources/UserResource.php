@@ -48,7 +48,14 @@ class UserResource extends Resource
                     ->maxItems(1)
                     ->relationship('roles', 'name')
                     ->required()
-                    ->label('Role')
+                    ->label('Role'),
+                TextInput::make('password')
+                    ->revealable(filament()->arePasswordsRevealable())
+                    ->password()
+                    ->required()
+                    ->hiddenOn('edit')
+                    ->minLength(6)
+                    ->maxLength(30),
             ]);
     }
 
