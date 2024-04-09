@@ -26,7 +26,7 @@ return [
     ],
 
     'panel_user' => [
-        'enabled' => true,
+        'enabled' => false,
         'name' => Roles::USER,
     ],
 

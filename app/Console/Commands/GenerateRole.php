@@ -24,7 +24,7 @@ class GenerateRole extends Command
                 return $it !== Roles::SUPER_ADMIN;
             })
             ->each(function ($it) {
-                Role::create([
+                Role::firstOrCreate([
                     'name' => $it,
                     'guard_name' => 'web'
                 ]);
