@@ -13,6 +13,11 @@ class Consultant extends Model
 
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'document' => 'array'
+    ];
+
+
     public function villa(): BelongsTo
     {
         return $this->belongsTo(Villa::class);

@@ -12,6 +12,7 @@ use Filament\Support\RawJs;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
+use Filament\Support\Enums\Alignment;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Textarea;
@@ -40,22 +41,23 @@ class VillaResource extends Resource
                     ->options(Category::asSelectArray())
                     ->required(),
                 TextInput::make('name')
+                    ->label('Villa Name')
                     ->required()
                     ->maxLength(255),
                 Section::make('Villa Detail')
                     ->columns(2)
                     ->schema([
                         Textarea::make('address')
-                            ->required()
+                            ->default('-')
                             ->columnSpanFull(),
                         TextInput::make('building_size')
-                            ->required()
+                            ->default('-')
                             ->maxLength(255),
                         TextInput::make('land_size')
-                            ->required()
+                            ->default('-')
                             ->maxLength(255),
                         TextInput::make('land_owner')
-                            ->required()
+                            ->default('-')
                             ->maxLength(255),
                         TextInput::make('land_certification_number')
                             ->required()
@@ -77,61 +79,77 @@ class VillaResource extends Resource
                             ->required()
                             ->maxLength(255),
                         TextInput::make('contact')
-                            ->required()
+                            ->default('-')
                             ->maxLength(255),
                         Textarea::make('address')
-                            ->required()
+                            ->default('-')
                             ->columnSpanFull(),
                         Textarea::make('passport_detail')
-                            ->required(),
+                            ->default('-'),
                         FileUpload::make('passport_file')
                             ->disk('public')
-                            ->image()
-                            ->directory('passport-files')
-                            ->required(),
+                            ->default('-')
+                            ->multiple()
+                            ->downloadable()
+                            ->preserveFilenames()
+                            ->directory('passport-files'),
                     ]),
                 Section::make('Tax')
                     ->relationship('tax')
                     ->schema([
                         TextInput::make('pb_tax')
-                            ->required()
+                            ->default('-')
                             ->maxLength(255),
                         TextInput::make('land_build_status')
-                            ->required()
+                            ->default('-')
                             ->maxLength(255),
                         TextInput::make('oss_status')
-                            ->required()
+                            ->default('-')
                             ->maxLength(255),
-                        Toggle::make('registered_pe')->default(false),
+                        Select::make('registered_pe')
+                        ->default('No')
+                        ->label('Registered as PE')
+                        ->options([
+                            'Yes' => 'Yes',
+                            'No' => 'No'
+                        ]),
                     ]),
                 Section::make('Management Agreement')
                     ->relationship('agreement')
                     ->schema([
-                        Toggle::make('signed_copy')->default(false),
+                        Select::make('signed_copy')
+                        ->default('No')
+                        ->label('Signed Copy')
+                        ->options([
+                            'Yes' => 'Yes',
+                            'No' => 'No'
+                        ]),
                         TextInput::make('booking_commision')
-                            ->required()
-                            ->prefix('Rp.')
-                            ->mask(RawJs::make('$money($input, `,`)'))
-                            ->stripCharacters('.')
-                            ->numeric(),
-                        Toggle::make('fix_monthly_fee')->default(false),
+                            ->default('-')
+                            // ->mask(RawJs::make('$money($input, `,`)'))
+                            ->stripCharacters('.'),
+                            // ->numeric(),
+                        Select::make('fix_monthly_fee')
+                        ->default('No')
+                        ->label('Fix Monthly Fee')
+                        ->options([
+                            'Yes' => 'Yes',
+                            'No' => 'No'
+                        ]),
                         TextInput::make('agent_fee')
-                            ->required()
-                            ->prefix('Rp.')
-                            ->mask(RawJs::make('$money($input, `,`)'))
-                            ->stripCharacters('.')
-                            ->numeric(),
+                            ->default('-')
+                            // ->mask(RawJs::make('$money($input, `,`)'))
+                            ->stripCharacters('.'),
                         TextInput::make('other_commision')
-                            ->required()
-                            ->prefix('Rp.')
-                            ->mask(RawJs::make('$money($input, `,`)'))
-                            ->stripCharacters('.')
-                            ->numeric(),
+                            ->default('-')
+                            // ->mask(RawJs::make('$money($input, `,`)'))
+                            ->stripCharacters('.'),
                         FileUpload::make('agreement_document')
                             ->disk('public')
                             ->image()
                             ->directory('agreement-documents')
-                            ->required(),
+                            ->default('-')
+                            ->preserveFilenames(),
 
                     ]),
                 Section::make('Insurance')
@@ -139,44 +157,42 @@ class VillaResource extends Resource
                     ->columns(2)
                     ->schema([
                         TextInput::make('company_name')
-                            ->required()
+                            ->default('-')
                             ->columnSpanFull()
                             ->maxLength(255),
                         TextInput::make('policy_number')
-                            ->required()
+                            ->default('-')
                             ->maxLength(255),
                         TextInput::make('insurance_name')
-                            ->required()
+                            ->label('Named Insurance')
+                            ->default('-')
                             ->maxLength(255),
                         TextInput::make('insurance_amount')
-                            ->prefix('Rp.')
-                            ->required()
-                            ->mask(RawJs::make('$money($input, `,`)'))
-                            ->stripCharacters('.')
-                            ->numeric(),
+                            ->default('-')
+                            ->label('Insured Ammount')
+                            // ->mask(RawJs::make('$money($input, `,`)'))
+                            ->stripCharacters('.'),
+                            // ->numeric(),
                         DatePicker::make('renewal_date')
-                            ->required(),
+                            ->label('Renewal Date'),
                     ]),
                 Section::make('Consultant')
                     ->relationship('consultant')
                     ->schema([
                         TextInput::make('consultant_used')
-                            ->required()
+                            ->default('-')
                             ->columnSpanFull()
                             ->maxLength(255),
-                        Repeater::make('documents')
-                            ->columnSpanFull()
-                            ->relationship('documents')
-                            ->schema([
-                                TextInput::make('licence_name')
-                                    ->required()
-                                    ->maxLength(255),
-                                FileUpload::make('document')
-                                    ->disk('public')
-                                    ->image()
-                                    ->directory('licences-documents')
-                                    ->required(),
-                            ])
+                        // TextInput::make('licence_name')
+                        //     ->label('List Documents')
+                        //     ->maxLength(255),
+                        FileUpload::make('document')
+                            ->default('-')
+                            ->maxSize(59999)
+                            ->label('List of Document on File')
+                            ->multiple()
+                            ->downloadable()
+                            ->preserveFilenames(),
                     ]),
             ]);
     }
@@ -185,31 +201,19 @@ class VillaResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('id')
+                ->label('No. ')
+                ->alignment(Alignment::Center)
+                ->toggleable(true),
                 TextColumn::make('name')
-                    ->searchable(),
-                TextColumn::make('building_size')
-                    ->searchable(),
-                TextColumn::make('land_size')
-                    ->searchable(),
-                TextColumn::make('land_owner')
-                    ->searchable(),
-                TextColumn::make('land_certification_number')
-                    ->searchable(),
-                TextColumn::make('imb_pbg_number')
-                    ->searchable(),
-                TextColumn::make('licence')
-                    ->searchable(),
-                TextColumn::make('rental_date')
-                    ->date()
-                    ->sortable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                ->label('Villa Name')
+                ->searchable(),
+                TextColumn::make('name.address')
+                ->label('Villa Address')
+                ->searchable(),
+                TextColumn::make('owner.name')
+                ->alignment(Alignment::Center)
+                ->toggleable(true),
             ])
             ->filters([
                 // Tables\Filters\TrashedFilter::make(),
@@ -228,10 +232,10 @@ class VillaResource extends Resource
                         ->modalIcon('heroicon-o-archive-box')
                         ->label('Archive'),
                     Tables\Actions\ForceDeleteAction::make()
-                        ->modalHeading('Hapus data')
-                        ->label('Hapus'),
+                        ->modalHeading('Delete data')
+                        ->label('Delete'),
                     Tables\Actions\RestoreAction::make()
-                        ->modalHeading('Kembalikan data villa'),
+                        ->modalHeading('Return the data villa'),
                 ])
             ])
             ->bulkActions([

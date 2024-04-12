@@ -15,6 +15,7 @@ class Agreement extends Model
     protected $casts = [
         'signed_copy' => 'boolean',
         'fix_monthly_fee' => 'boolean',
+        'agreement_document' => 'array'
     ];
 
     public function villa(): BelongsTo
