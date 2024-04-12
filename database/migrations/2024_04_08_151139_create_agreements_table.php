@@ -19,6 +19,8 @@ return new class extends Migration
             $table->boolean('fix_monthly_fee')->nullable();
             $table->integer('agent_fee')->nullable();
             $table->integer('other_commision')->nullable();
+            $table->string('marketing_agent_sites')->nullable();
+            $table->string('marketing_commission')->nullable();
             $table->string('agreement_document')->nullable();
             $table->timestamps();
         });

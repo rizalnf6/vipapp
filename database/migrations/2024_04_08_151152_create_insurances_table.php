@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('insurance_name')->nullable();
             $table->integer('insurance_amount')->nullable();
             $table->date('renewal_date')->nullable();
+            $table->date('insured_policy_cost')->nullable();
             $table->timestamps();
         });
     }
