@@ -56,7 +56,7 @@ class VillaResource extends Resource
                         TextInput::make('land_size')
                             ->placeholder('-')
                             ->maxLength(255),
-                        TextInput::make('land_owner')
+                        TextInput::make('land_owner_name')
                             ->placeholder('-')
                             ->maxLength(255),
                         TextInput::make('land_certification_number')
