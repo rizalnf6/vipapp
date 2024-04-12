@@ -13,7 +13,7 @@ class Owner extends Model
     protected $guarded = ['id'];
     
     protected $casts = [
-        'document' => 'array'
+        'passport_file' => 'array'
     ];
 
     public function villa(): BelongsTo

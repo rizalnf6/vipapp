@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('agreements', function (Blueprint $table) {
             $table->id();
             $table->foreignId('villa_id')->constrained()->onDelete('cascade');
-            $table->boolean('signed_copy');
-            $table->integer('booking_commision');
-            $table->boolean('fix_monthly_fee');
-            $table->integer('agent_fee');
-            $table->integer('other_commision');
-            $table->string('agreement_document');
+            $table->boolean('signed_copy')->nullable();
+            $table->integer('booking_commision')->nullable();
+            $table->boolean('fix_monthly_fee')->nullable();
+            $table->integer('agent_fee')->nullable();
+            $table->integer('other_commision')->nullable();
+            $table->string('agreement_document')->nullable();
             $table->timestamps();
         });
     }

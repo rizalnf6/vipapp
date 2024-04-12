@@ -16,10 +16,10 @@ return new class extends Migration
             $table->id();
             $table->enum('category', Category::asArray());
             $table->string('name');
-            $table->text('address');
-            $table->string('building_size');
-            $table->string('land_size');
-            $table->string('land_owner');
+            $table->text('address')->nullable();
+            $table->string('building_size')->nullable();
+            $table->string('land_size')->nullable();
+            $table->string('land_owner')->nullable();
             $table->string('land_certification_number');
             $table->string('imb_pbg_number');
             $table->string('licence');

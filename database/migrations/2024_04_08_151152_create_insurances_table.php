@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('insurances', function (Blueprint $table) {
             $table->id();
             $table->foreignId('villa_id')->constrained()->onDelete('cascade');
-            $table->string('company_name');
-            $table->string('policy_number');
-            $table->string('insurance_name');
-            $table->integer('insurance_amount');
-            $table->date('renewal_date');
+            $table->string('company_name')->nullable();
+            $table->string('policy_number')->nullable();
+            $table->string('insurance_name')->nullable();
+            $table->integer('insurance_amount')->nullable();
+            $table->date('renewal_date')->nullable();
             $table->timestamps();
         });
     }

@@ -14,17 +14,12 @@ class Consultant extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
-        'document' => 'array'
+        'documents' => 'array'
     ];
 
 
     public function villa(): BelongsTo
     {
         return $this->belongsTo(Villa::class);
-    }
-
-    public function documents(): HasMany
-    {
-        return $this->hasMany(ConsultantDocument::class, 'consultant_id');
     }
 }

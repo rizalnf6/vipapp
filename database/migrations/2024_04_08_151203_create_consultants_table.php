@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('consultants', function (Blueprint $table) {
             $table->id();
             $table->foreignId('villa_id')->constrained()->onDelete('cascade');
-            $table->string('consultant_used');
+            $table->string('consultant_used')->nullable();
+            $table->text('documents')->nullable();
             $table->timestamps();
         });
     }

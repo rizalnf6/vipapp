@@ -48,16 +48,16 @@ class VillaResource extends Resource
                     ->columns(2)
                     ->schema([
                         Textarea::make('address')
-                            ->default('-')
+                            ->placeholder('-')
                             ->columnSpanFull(),
                         TextInput::make('building_size')
-                            ->default('-')
+                            ->placeholder('-')
                             ->maxLength(255),
                         TextInput::make('land_size')
-                            ->default('-')
+                            ->placeholder('-')
                             ->maxLength(255),
                         TextInput::make('land_owner')
-                            ->default('-')
+                            ->placeholder('-')
                             ->maxLength(255),
                         TextInput::make('land_certification_number')
                             ->required()
@@ -79,16 +79,15 @@ class VillaResource extends Resource
                             ->required()
                             ->maxLength(255),
                         TextInput::make('contact')
-                            ->default('-')
+                            ->placeholder('-')
                             ->maxLength(255),
                         Textarea::make('address')
-                            ->default('-')
+                            ->placeholder('-')
                             ->columnSpanFull(),
                         Textarea::make('passport_detail')
-                            ->default('-'),
+                            ->placeholder('-'),
                         FileUpload::make('passport_file')
                             ->disk('public')
-                            ->default('-')
                             ->multiple()
                             ->downloadable()
                             ->preserveFilenames()
@@ -98,57 +97,56 @@ class VillaResource extends Resource
                     ->relationship('tax')
                     ->schema([
                         TextInput::make('pb_tax')
-                            ->default('-')
+                            ->placeholder('-')
                             ->maxLength(255),
                         TextInput::make('land_build_status')
-                            ->default('-')
+                            ->placeholder('-')
                             ->maxLength(255),
                         TextInput::make('oss_status')
-                            ->default('-')
+                            ->placeholder('-')
                             ->maxLength(255),
                         Select::make('registered_pe')
-                        ->default('No')
-                        ->label('Registered as PE')
-                        ->options([
-                            'Yes' => 'Yes',
-                            'No' => 'No'
-                        ]),
+                            ->default(false)
+                            ->label('Registered as PE')
+                            ->options([
+                                true => 'Yes',
+                                false => 'No'
+                            ]),
                     ]),
                 Section::make('Management Agreement')
                     ->relationship('agreement')
                     ->schema([
                         Select::make('signed_copy')
-                        ->default('No')
-                        ->label('Signed Copy')
-                        ->options([
-                            'Yes' => 'Yes',
-                            'No' => 'No'
-                        ]),
+                            ->default(false)
+                            ->label('Signed Copy')
+                            ->options([
+                                true => 'Yes',
+                                false => 'No'
+                            ]),
                         TextInput::make('booking_commision')
-                            ->default('-')
-                            // ->mask(RawJs::make('$money($input, `,`)'))
-                            ->stripCharacters('.'),
-                            // ->numeric(),
+                            ->placeholder('-')
+                            ->mask(RawJs::make('$money($input, `,`)'))
+                            ->stripCharacters('.')
+                            ->numeric(),
                         Select::make('fix_monthly_fee')
-                        ->default('No')
-                        ->label('Fix Monthly Fee')
-                        ->options([
-                            'Yes' => 'Yes',
-                            'No' => 'No'
-                        ]),
+                            ->default(false)
+                            ->label('Fix Monthly Fee')
+                            ->options([
+                                true => 'Yes',
+                                false => 'No'
+                            ]),
                         TextInput::make('agent_fee')
-                            ->default('-')
-                            // ->mask(RawJs::make('$money($input, `,`)'))
+                            ->placeholder('-')
+                            ->mask(RawJs::make('$money($input, `,`)'))
                             ->stripCharacters('.'),
                         TextInput::make('other_commision')
-                            ->default('-')
-                            // ->mask(RawJs::make('$money($input, `,`)'))
+                            ->placeholder('-')
+                            ->mask(RawJs::make('$money($input, `,`)'))
                             ->stripCharacters('.'),
                         FileUpload::make('agreement_document')
                             ->disk('public')
                             ->image()
                             ->directory('agreement-documents')
-                            ->default('-')
                             ->preserveFilenames(),
 
                     ]),
@@ -157,22 +155,22 @@ class VillaResource extends Resource
                     ->columns(2)
                     ->schema([
                         TextInput::make('company_name')
-                            ->default('-')
+                            ->placeholder('-')
                             ->columnSpanFull()
                             ->maxLength(255),
                         TextInput::make('policy_number')
-                            ->default('-')
+                            ->placeholder('-')
                             ->maxLength(255),
                         TextInput::make('insurance_name')
                             ->label('Named Insurance')
-                            ->default('-')
+                            ->placeholder('-')
                             ->maxLength(255),
                         TextInput::make('insurance_amount')
-                            ->default('-')
+                            ->placeholder('-')
                             ->label('Insured Ammount')
-                            // ->mask(RawJs::make('$money($input, `,`)'))
-                            ->stripCharacters('.'),
-                            // ->numeric(),
+                            ->mask(RawJs::make('$money($input, `,`)'))
+                            ->stripCharacters('.')
+                            ->numeric(),
                         DatePicker::make('renewal_date')
                             ->label('Renewal Date'),
                     ]),
@@ -180,17 +178,16 @@ class VillaResource extends Resource
                     ->relationship('consultant')
                     ->schema([
                         TextInput::make('consultant_used')
-                            ->default('-')
+                            ->placeholder('-')
                             ->columnSpanFull()
                             ->maxLength(255),
-                        // TextInput::make('licence_name')
-                        //     ->label('List Documents')
-                        //     ->maxLength(255),
-                        FileUpload::make('document')
-                            ->default('-')
-                            ->maxSize(59999)
+                        FileUpload::make('documents')
+                            ->maxSize(200 * 1024)
                             ->label('List of Document on File')
                             ->multiple()
+                            ->moveFiles()
+                            ->disk('public')
+                            ->directory('consultant-documents')
                             ->downloadable()
                             ->preserveFilenames(),
                     ]),
@@ -202,18 +199,18 @@ class VillaResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('id')
-                ->label('No. ')
-                ->alignment(Alignment::Center)
-                ->toggleable(true),
+                    ->label('No. ')
+                    ->alignment(Alignment::Center)
+                    ->toggleable(true),
                 TextColumn::make('name')
-                ->label('Villa Name')
-                ->searchable(),
+                    ->label('Villa Name')
+                    ->searchable(),
                 TextColumn::make('name.address')
-                ->label('Villa Address')
-                ->searchable(),
+                    ->label('Villa Address')
+                    ->searchable(),
                 TextColumn::make('owner.name')
-                ->alignment(Alignment::Center)
-                ->toggleable(true),
+                    ->alignment(Alignment::Center)
+                    ->toggleable(true),
             ])
             ->filters([
                 // Tables\Filters\TrashedFilter::make(),

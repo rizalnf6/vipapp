@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('taxes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('villa_id')->constrained()->onDelete('cascade');
-            $table->string('pb_tax');
-            $table->boolean('registered_pe');
-            $table->string('land_build_status');
-            $table->string('oss_status');
+            $table->string('pb_tax')->nullable();
+            $table->boolean('registered_pe')->nullable();
+            $table->string('land_build_status')->nullable();
+            $table->string('oss_status')->nullable();
             $table->timestamps();
         });
     }

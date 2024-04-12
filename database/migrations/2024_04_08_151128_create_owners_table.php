@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('villa_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->string('contact');
-            $table->string('address');
-            $table->text('passport_detail');
-            $table->string('passport_file');
+            $table->string('contact')->nullable();
+            $table->string('address')->nullable();
+            $table->text('passport_detail')->nullable();
+            $table->text('passport_file')->nullable();
             $table->timestamps();
         });
     }
