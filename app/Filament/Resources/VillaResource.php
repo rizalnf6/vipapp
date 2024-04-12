@@ -205,7 +205,7 @@ class VillaResource extends Resource
                 TextColumn::make('name')
                     ->label('Villa Name')
                     ->searchable(),
-                TextColumn::make('name.address')
+                TextColumn::make('address')
                     ->label('Villa Address')
                     ->searchable(),
                 TextColumn::make('owner.name')
