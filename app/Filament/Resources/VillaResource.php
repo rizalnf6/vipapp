@@ -56,8 +56,13 @@ class VillaResource extends Resource
                         TextInput::make('land_size')
                             ->default('-')
                             ->maxLength(255),
+<<<<<<< HEAD
                         TextInput::make('land_owner')
                             ->default('-')
+=======
+                        TextInput::make('land_owner_name')
+                            ->placeholder('-')
+>>>>>>> 95e4cd815e9eea1c6152c7b93b9dedbf6221521c
                             ->maxLength(255),
                         TextInput::make('land_certification_number')
                             ->default('-')
@@ -209,10 +214,16 @@ class VillaResource extends Resource
                     ->label('Villa Name')
                     ->sortable()
                     ->searchable(),
+<<<<<<< HEAD
                 // TextColumn::make('address')
                 // ->alignment(Alignment::Center)
                 //     ->label('Villa Address')
                 //     ->searchable(),
+=======
+                TextColumn::make('address')
+                    ->label('Villa Address')
+                    ->searchable(),
+>>>>>>> 95e4cd815e9eea1c6152c7b93b9dedbf6221521c
                 TextColumn::make('owner.name')
                     ->alignment(Alignment::Center)
                     ->toggleable(true),

@@ -13,10 +13,12 @@ class ViewVilla extends ViewRecord
 {
     protected static string $resource = VillaResource::class;
 
-    public function getMaxContentWidth(): MaxWidth
-    {
-        return MaxWidth::Full;
-    }
+       protected static string $view = 'filament.resources.villa-resource.pages.view-villa';
+
+    // public function getMaxContentWidth(): MaxWidth
+    // {
+    //     return MaxWidth::Full;
+    // }
 
     protected function getHeaderActions(): array
     {
