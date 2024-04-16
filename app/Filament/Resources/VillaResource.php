@@ -37,38 +37,39 @@ class VillaResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('category')
-                    ->options(Category::asSelectArray())
-                    ->required(),
                 TextInput::make('name')
                     ->label('Villa Name')
                     ->required()
                     ->maxLength(255),
+                Select::make('category')
+                    ->options(Category::asSelectArray())
+                    ->required(),
                 Section::make('Villa Detail')
                     ->columns(2)
                     ->schema([
                         Textarea::make('address')
-                            ->placeholder('-')
+                            ->default('-')
                             ->columnSpanFull(),
                         TextInput::make('building_size')
-                            ->placeholder('-')
+                            ->default('-')
                             ->maxLength(255),
                         TextInput::make('land_size')
-                            ->placeholder('-')
+                            ->default('-')
                             ->maxLength(255),
-                        TextInput::make('land_owner_name')
-                            ->placeholder('-')
+                        TextInput::make('land_owner')
+                            ->default('-')
                             ->maxLength(255),
                         TextInput::make('land_certification_number')
-                            ->required()
+                            ->default('-')
                             ->maxLength(255),
                         TextInput::make('imb_pbg_number')
-                            ->required()
+                            ->default('-')
                             ->maxLength(255),
                         TextInput::make('licence')
-                            ->required()
+                            ->default('-')
                             ->maxLength(255),
                         DatePicker::make('rental_date')
+                            ->default(now())
                             ->required(),
                     ]),
                 Section::make('Owner')
@@ -76,16 +77,16 @@ class VillaResource extends Resource
                     ->relationship('owner')
                     ->schema([
                         TextInput::make('name')
-                            ->required()
+                            ->default('-')
                             ->maxLength(255),
                         TextInput::make('contact')
-                            ->placeholder('-')
+                            ->default('-')
                             ->maxLength(255),
                         Textarea::make('address')
-                            ->placeholder('-')
+                            ->default('-')
                             ->columnSpanFull(),
                         Textarea::make('passport_detail')
-                            ->placeholder('-'),
+                            ->default('-'),
                         FileUpload::make('passport_file')
                             ->disk('public')
                             ->multiple()
@@ -97,13 +98,13 @@ class VillaResource extends Resource
                     ->relationship('tax')
                     ->schema([
                         TextInput::make('pb_tax')
-                            ->placeholder('-')
+                            ->default('-')
                             ->maxLength(255),
                         TextInput::make('land_build_status')
-                            ->placeholder('-')
+                            ->default('-')
                             ->maxLength(255),
                         TextInput::make('oss_status')
-                            ->placeholder('-')
+                            ->default('-')
                             ->maxLength(255),
                         Select::make('registered_pe')
                             ->default(false)
@@ -124,10 +125,10 @@ class VillaResource extends Resource
                                 false => 'No'
                             ]),
                         TextInput::make('booking_commision')
-                            ->placeholder('-')
-                            ->mask(RawJs::make('$money($input, `,`)'))
-                            ->stripCharacters('.')
-                            ->numeric(),
+                            ->default('-'),
+                            //->mask(RawJs::make('$money($input, `,`)'))
+                            //->stripCharacters('.')
+                            //->numeric(),
                         Select::make('fix_monthly_fee')
                             ->default(false)
                             ->label('Fix Monthly Fee')
@@ -136,16 +137,16 @@ class VillaResource extends Resource
                                 false => 'No'
                             ]),
                         TextInput::make('agent_fee')
-                            ->placeholder('-')
+                            ->default('-')
                             ->mask(RawJs::make('$money($input, `,`)'))
                             ->stripCharacters('.'),
                         TextInput::make('other_commision')
-                            ->placeholder('-')
-                            ->mask(RawJs::make('$money($input, `,`)'))
-                            ->stripCharacters('.'),
+                            ->default('-'),
+                            //->mask(RawJs::make('$money($input, `,`)'))
+                            //->stripCharacters('.'),
                         FileUpload::make('agreement_document')
                             ->disk('public')
-                            ->image()
+                            ->multiple()
                             ->directory('agreement-documents')
                             ->preserveFilenames(),
 
@@ -155,30 +156,31 @@ class VillaResource extends Resource
                     ->columns(2)
                     ->schema([
                         TextInput::make('company_name')
-                            ->placeholder('-')
+                            ->default('-')
                             ->columnSpanFull()
                             ->maxLength(255),
                         TextInput::make('policy_number')
-                            ->placeholder('-')
+                            ->default('-')
                             ->maxLength(255),
                         TextInput::make('insurance_name')
                             ->label('Named Insurance')
-                            ->placeholder('-')
+                            ->default('-')
                             ->maxLength(255),
                         TextInput::make('insurance_amount')
-                            ->placeholder('-')
-                            ->label('Insured Ammount')
-                            ->mask(RawJs::make('$money($input, `,`)'))
-                            ->stripCharacters('.')
-                            ->numeric(),
+                            ->default('-')
+                            ->label('Insured Ammount'),
+                            //->mask(RawJs::make('$money($input, `,`)'))
+                            //->stripCharacters('.')
+                            //->numeric(),
                         DatePicker::make('renewal_date')
+                            ->default(now())
                             ->label('Renewal Date'),
                     ]),
                 Section::make('Consultant')
                     ->relationship('consultant')
                     ->schema([
                         TextInput::make('consultant_used')
-                            ->placeholder('-')
+                            ->default('-')
                             ->columnSpanFull()
                             ->maxLength(255),
                         FileUpload::make('documents')
@@ -203,8 +205,14 @@ class VillaResource extends Resource
                     ->alignment(Alignment::Center)
                     ->toggleable(true),
                 TextColumn::make('name')
+                ->alignment(Alignment::Center)
                     ->label('Villa Name')
+                    ->sortable()
                     ->searchable(),
+                // TextColumn::make('address')
+                // ->alignment(Alignment::Center)
+                //     ->label('Villa Address')
+                //     ->searchable(),
                 TextColumn::make('address')
                     ->label('Villa Address')
                     ->searchable(),

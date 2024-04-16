@@ -37,7 +37,7 @@ class ListVillas extends ListRecords
                 ->label('Management')
                 ->modifyQueryUsing(fn (Builder $query) => $query->whereNull('deleted_at')->where('category', Category::Management)),
             'non_management' => Tab::make()
-                ->label('Non Management')
+                ->label('Exclusively Marketed Villas')
                 ->modifyQueryUsing(fn (Builder $query) => $query->whereNull('deleted_at')->where('category', Category::NonManagement)),
         ];
 

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('villa_id')->constrained()->onDelete('cascade');
             $table->boolean('signed_copy')->nullable();
-            $table->integer('booking_commision')->nullable();
+            $table->string('booking_commision')->nullable();
             $table->boolean('fix_monthly_fee')->nullable();
             $table->integer('agent_fee')->nullable();
             $table->integer('other_commision')->nullable();
