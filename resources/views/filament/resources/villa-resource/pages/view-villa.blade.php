@@ -78,6 +78,19 @@
                         <p class="text-gray-500">Passport Detail</p>
                         <p class="font-medium">{{ $record->owner->passport_detail ?: '-' }}</p>
                     </div>
+                    <div class="col-span-1 text-start">
+                        <p class="text-gray-500">Passport File</p>
+                        <div class="flex flex-wrap items-center gap-3">
+                            @forelse ($record->owner->passport_file as $item)
+                                <a class="bg-primary-50 border-primary-500 rounded-full border px-3 py-1 text-xs"
+                                    href="{{ asset('storage/' . $item) }}" target="_blank" rel="noopener noreferrer">
+                                    {{ str_replace('passport-files/', '', $item) }}
+                                </a>
+                            @empty
+                                <p class="font-medium">-</p>
+                            @endforelse
+                        </div>
+                    </div>
                 </div>
 
                 {{-- Tax --}}
@@ -122,6 +135,14 @@
                         <p class="text-gray-500">Other commision</p>
                         <p class="font-medium">{{ $record->agreement->other_commision ?: '-' }}</p>
                     </div>
+                    <div class="col-span-1 text-start">
+                        <p class="text-gray-500">Document</p>
+                        <a class="bg-primary-50 border-primary-500 rounded-full border px-3 py-1 text-xs"
+                            href="{{ asset('storage/' . $record->agreement->agreement_document) }}" target="_blank"
+                            rel="noopener noreferrer">
+                            {{ str_replace('agreement-documents/', '', $record->agreement->agreement_document) }}
+                        </a>
+                    </div>
                 </div>
 
                 {{-- Insurance --}}
@@ -149,10 +170,24 @@
                 </div>
 
                 {{-- Consultant --}}
-                <div class="grid w-full grid-cols-1 gap-3 md:grid-cols-2" x-show="current == 5">
+                <div class="grid w-full grid-cols-1 gap-3" x-show="current==5">
                     <div class="col-span-1 text-start">
                         <p class="text-gray-500">Consultant used</p>
                         <p class="font-medium">{{ $record->consultant->consultant_used ?: '-' }}</p>
+                    </div>
+                    <div class="col-span-1 text-start">
+                        <p class="text-gray-500">Documents</p>
+                        <div class="flex flex-wrap items-center gap-3">
+                            @forelse ($record->consultant->documents as $item)
+                                <a class="bg-primary-50 border-primary-500 rounded-full border px-3 py-1 text-xs"
+                                    href="{{ asset('storage/' . $item) }}" target="_blank"
+                                    rel="noopener noreferrer">
+                                    {{ str_replace('consultant-documents/', '', $item) }}
+                                </a>
+                            @empty
+                                <p class="font-medium">-</p>
+                            @endforelse
+                        </div>
                     </div>
                 </div>
             </div>
