@@ -9,5 +9,5 @@ use BenSampo\Enum\Enum;
 final class Category extends Enum
 {
     const Management = 'Management';
-    const NonManagement = 'Non Management';
+    const NonManagement = 'Exclusively Marketed Villas';
 }

@@ -17,15 +17,10 @@ return new class extends Migration
             $table->boolean('signed_copy')->nullable();
             $table->string('booking_commision')->nullable();
             $table->boolean('fix_monthly_fee')->nullable();
-<<<<<<< HEAD
-            $table->string('agent_fee')->nullable();
-            $table->string('other_commision')->nullable();
-=======
             $table->integer('agent_fee')->nullable();
             $table->integer('other_commision')->nullable();
             $table->string('marketing_agent_sites')->nullable();
             $table->string('marketing_commission')->nullable();
->>>>>>> 95e4cd815e9eea1c6152c7b93b9dedbf6221521c
             $table->string('agreement_document')->nullable();
             $table->timestamps();
         });
