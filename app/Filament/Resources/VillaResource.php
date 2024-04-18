@@ -7,6 +7,8 @@ use Filament\Tables;
 use App\Models\Villa;
 use App\Enums\Category;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Components\TextInput;
 use Filament\Tables\Table;
 use Filament\Support\RawJs;
 use Filament\Resources\Resource;
@@ -18,7 +20,6 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
-use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Forms\Components\DatePicker;
@@ -26,6 +27,8 @@ use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\VillaResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Closure;
+use Filament\Tables\Grouping\Group;
 
 class VillaResource extends Resource
 {
@@ -49,14 +52,35 @@ class VillaResource extends Resource
                     ->schema([
                         Textarea::make('address')
                             ->default('-')
+                            ->columnSpan(4),
+                        Textinput::make('villa_manager_name')
+                            ->default('-')
+                            ->columnSpan(4),
+                        Textinput::make('villa_manager_email')
+                            ->default('-')
+                            ->columnSpan(2),
+                        Textinput::make('villa_manager_contact')
+                            ->default('-')
+                            ->columnSpan(2),
+                        Textinput::make('land_owner')
+                            ->default('-')
                             ->columnSpanFull(),
+                        DatePicker::make('rental_date')
+                            ->default(now())
+                            ->required(),
+                        DatePicker::make('lease_date')
+                            ->default(now())
+                            ->required(),
+                        TextInput::make('land_owner_phone_number')
+                            ->default('-')
+                            ->maxLength(255),
                         TextInput::make('building_size')
                             ->default('-')
                             ->maxLength(255),
                         TextInput::make('land_size')
                             ->default('-')
                             ->maxLength(255),
-                        TextInput::make('land_owner')
+                        TextInput::make('licence')
                             ->default('-')
                             ->maxLength(255),
                         TextInput::make('land_certification_number')
@@ -65,12 +89,21 @@ class VillaResource extends Resource
                         TextInput::make('imb_pbg_number')
                             ->default('-')
                             ->maxLength(255),
-                        TextInput::make('licence')
+                        TextInput::make('xtc_power')
                             ->default('-')
                             ->maxLength(255),
-                        DatePicker::make('rental_date')
-                            ->default(now())
-                            ->required(),
+                        TextInput::make('pln_id')
+                            ->default('-')
+                            ->maxLength(255),
+                        Toggle::make('for_sale')
+                            ->default(false)
+                            ->label('For Sale')
+                            ->live(),
+                        TextInput::make('for_sale_link')
+                            ->default('-')
+                            ->hidden(fn (Get $get): bool => ! $get('for_sale'))
+                            ->maxLength(255)
+                            ->columnSpan(4),
                     ]),
                 Section::make('Owner')
                     ->columns(2)
@@ -99,15 +132,19 @@ class VillaResource extends Resource
                     ->schema([
                         TextInput::make('pb_tax')
                             ->default('-')
+                            ->columnSpan(12)
                             ->maxLength(255),
-                        TextInput::make('land_build_status')
+                        TextArea::make('land_build_status')
                             ->default('-')
+                            ->columnSpan(12)
                             ->maxLength(255),
                         TextInput::make('oss_status')
                             ->default('-')
+                            ->columnSpan(8)
                             ->maxLength(255),
                         Select::make('registered_pe')
                             ->default(false)
+                            ->columnSpan(4)
                             ->label('Registered as PE')
                             ->options([
                                 true => 'Yes',
