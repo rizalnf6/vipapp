@@ -50,9 +50,18 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                // Widgets\AccountWidget::class,
+                // Widgets\FilamentInfoWidget::class,
             ])
+            // ->navigation(function (NavigationBuilder $builder): NavigationBuilder {
+            //     return $builder->groups([
+            //         NavigationGroup::make('Pages')
+            //             ->items([
+            //                 ...VillaResource::getNavigationItems(),
+            //                 ...UserResource::getNavigationItems(),
+            //             ])
+            //     ]);
+            // })
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->middleware([
                 EncryptCookies::class,

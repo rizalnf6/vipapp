@@ -17,8 +17,8 @@ return new class extends Migration
             $table->boolean('signed_copy')->nullable();
             $table->string('booking_commision')->nullable();
             $table->boolean('fix_monthly_fee')->nullable();
-            $table->integer('agent_fee')->nullable();
-            $table->integer('other_commision')->nullable();
+            $table->string('agent_fee')->nullable();
+            $table->string('other_commision')->nullable();
             $table->string('marketing_agent_sites')->nullable();
             $table->string('marketing_commission')->nullable();
             $table->string('agreement_document')->nullable();
