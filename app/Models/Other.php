@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Other extends Model
 {
     use HasFactory;
+
+    protected $guarded = ['id'];
+
+    public function villa(): BelongsTo
+    {
+        return $this->belongsTo(Villa::class);
+    }
 }
+

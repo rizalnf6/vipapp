@@ -120,8 +120,16 @@
                         <p class="font-medium">{{ $record->agreement->signed_copy ? 'Yes' : 'No' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
+                        <p class="text-gray-500">Marketing Agent Sites</p>
+                        <p class="font-medium">{{ $record->agreement->marketing_agent_sites ?: '-' }}</p>
+                    </div>
+                    <div class="col-span-1 text-start">
                         <p class="text-gray-500">Booking commision</p>
                         <p class="font-medium">{{ $record->agreement->booking_commision ?: '-' }}</p>
+                    </div>
+                    <div class="col-span-1 text-start">
+                        <p class="text-gray-500">Marketing Commision</p>
+                        <p class="font-medium">{{ $record->agreement->marketing_commision ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
                         <p class="text-gray-500">Fix monthly fee</p>
@@ -138,14 +146,7 @@
                     <div class="col-span-1 text-start">
                         <p class="text-gray-500">Document</p>
                         <div class="flex flex-wrap items-center gap-3">
-                            @forelse ($record->agreement->agreement_document as $item)
-                                <a class="bg-primary-50 border-primary-500 rounded-full border px-3 py-1 text-xs"
-                                    href="{{ asset('storage/' . $item) }}" target="_blank" rel="noopener noreferrer">
-                                    {{ str_replace('agreement_document/', '', $item) }}
-                                </a>
-                            @empty
-                                <p class="font-medium">-</p>
-                            @endforelse
+                            
                         </div>
                     </div>
                 </div>
@@ -154,7 +155,7 @@
                 <div class="grid w-full grid-cols-1 gap-3 md:grid-cols-2" x-show="current == 4">
                     <div class="col-span-1 text-start">
                         <p class="text-gray-500">Company name</p>
-                        <p class="font-medium">{{ $record->insurance->company_name ?: '-' }}</p>
+                        <p class="font-medium">{{ $record->insurance?->company_name ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
                         <p class="text-gray-500">Policy number</p>
@@ -169,12 +170,16 @@
                         <p class="font-medium">{{ $record->insurance->insurance_amount ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
+                        <p class="text-gray-500">Insured policy cost</p>
+                        <p class="font-medium">{{ $record->insurance->insured_policy_cost ?: '-' }}</p>
+                    </div>
+                    <div class="col-span-1 text-start">
                         <p class="text-gray-500">Renewal date</p>
                         <p class="font-medium">{{ $record->insurance->renewal_date?->format('d F Y') ?: '-' }}</p>
                     </div>
                 </div>
-
-                {{-- Consultant --}}
+                
+                {{-- Documents --}}
                 <div class="grid w-full grid-cols-1 gap-3" x-show="current==5">
                     <div class="col-span-1 text-start">
                         <p class="text-gray-500">Consultant used</p>
@@ -195,6 +200,18 @@
                         </div>
                     </div>
                 </div>
+                
+                {{-- Others --}}
+                <div class="grid w-full grid-cols-1 gap-3" x-show="current==6">
+                    <div class="col-span-1 text-start">
+                        <p class="text-gray-500">Notes</p>
+                        <p class="font-medium">{{ $record->others?->notes ?: '-' }}</p>
+                    </div>
+                    <div class="col-span-1 text-start">
+                        <p class="text-gray-500">Outstanding</p>
+                        <p class="font-medium">{{ $record->others?->outstanding ?: '-' }}</p>
+                    </div>
+                </div>
             </div>
         </center>
     </div>
@@ -209,7 +226,8 @@
                 "Tax",
                 "Management Agreement",
                 "Insurance",
-                "Consultant",
+                "Documents",
+                "Others",
             ],
         }))
     })

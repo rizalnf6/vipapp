@@ -41,4 +41,9 @@ class Villa extends Model
     {
         return $this->hasOne(Consultant::class);
     }
+
+    public function others(): HasOne
+    {
+        return $this->hasOne(Other::class);
+    }
 }

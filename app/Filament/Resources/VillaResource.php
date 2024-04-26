@@ -95,15 +95,17 @@ class VillaResource extends Resource
                         TextInput::make('pln_id')
                             ->default('-')
                             ->maxLength(255),
-                        Toggle::make('for_sale')
-                            ->default(false)
+                        Select::make('for_sale')
                             ->label('For Sale')
-                            ->live(),
+                            ->default(false)
+                            ->options([
+                                true => 'Yes',
+                                false => 'No'
+                            ]),
                         TextInput::make('for_sale_link')
                             ->default('-')
-                            ->hidden(fn (Get $get): bool => ! $get('for_sale'))
                             ->maxLength(255)
-                            ->columnSpan(4),
+                            ->columnSpan(3),
                     ]),
                 Section::make('Owner')
                     ->columns(2)
@@ -151,22 +153,40 @@ class VillaResource extends Resource
                                 false => 'No'
                             ]),
                     ]),
+
+                // Management Agreements
                 Section::make('Management Agreement')
                     ->relationship('agreement')
                     ->schema([
                         Select::make('signed_copy')
                             ->default(false)
                             ->label('Signed Copy')
+                            ->columnSpan(2)
                             ->options([
                                 true => 'Yes',
                                 false => 'No'
                             ]),
+                        Select::make('marketing_agent_sites')
+                            ->label('Marketing Agent Sites')
+                            ->columnSpan(8)
+                            ->options([
+                                'agentA' => 'Agent A',
+                                'agentB' => 'Agent B',
+                                'agentC' => 'Agent C',
+                            ]),
+                        TextInput::make('marketing_commision')
+                            ->maxLength(255)
+                            ->columnSpan(4)
+                            ->default('-'),
                         TextInput::make('booking_commision')
+                            ->maxLength(255)
+                            ->columnSpan(4)
                             ->default('-'),
                             //->mask(RawJs::make('$money($input, `,`)'))
                             //->stripCharacters('.')
                             //->numeric(),
                         Select::make('fix_monthly_fee')
+                            ->columnSpan(4)
                             ->default(false)
                             ->label('Fix Monthly Fee')
                             ->options([
@@ -178,23 +198,25 @@ class VillaResource extends Resource
                             ->mask(RawJs::make('$money($input, `,`)'))
                             ->stripCharacters('.'),
                         TextInput::make('other_commision')
+                            ->maxLength(255)
+                            ->columnSpan(3)
                             ->default('-'),
                             //->mask(RawJs::make('$money($input, `,`)'))
                             //->stripCharacters('.'),
-                        FileUpload::make('agreement_document')
-                            ->disk('public')
-                            ->multiple()
-                            ->directory('agreement-documents')
-                            ->preserveFilenames(),
+                        // FileUpload::make('agreement_document')
+                        //     ->disk('public')
+                        //     ->multiple()
+                        //     ->directory('agreement-documents')
+                        //     ->preserveFilenames(),
 
                     ]),
                 Section::make('Insurance')
                     ->relationship('insurance')
-                    ->columns(2)
+                    ->columns(4)
                     ->schema([
                         TextInput::make('company_name')
                             ->default('-')
-                            ->columnSpanFull()
+                            ->columnSpan(5)
                             ->maxLength(255),
                         TextInput::make('policy_number')
                             ->default('-')
@@ -206,6 +228,9 @@ class VillaResource extends Resource
                         TextInput::make('insurance_amount')
                             ->default('-')
                             ->label('Insured Ammount'),
+                        TextInput::make('insured_policy_cost')
+                            ->default('-')
+                            ->label('Insured Policy Cost'),
                             //->mask(RawJs::make('$money($input, `,`)'))
                             //->stripCharacters('.')
                             //->numeric(),
@@ -213,22 +238,37 @@ class VillaResource extends Resource
                             ->default(now())
                             ->label('Renewal Date'),
                     ]),
-                Section::make('Consultant')
+                Section::make('Documents')
                     ->relationship('consultant')
+                    ->columns(2)
                     ->schema([
                         TextInput::make('consultant_used')
                             ->default('-')
-                            ->columnSpanFull()
+                            ->columnSpan(8)
                             ->maxLength(255),
                         FileUpload::make('documents')
                             ->maxSize(200 * 1024)
                             ->label('List of Document on File')
                             ->multiple()
                             ->moveFiles()
+                            ->columnSpan(8)
                             ->disk('public')
                             ->directory('consultant-documents')
                             ->downloadable()
                             ->preserveFilenames(),
+                    ]),
+                Section::make('Other')
+                    ->relationship('others')
+                    ->columns(4)
+                    ->schema([
+                        TextArea::make('notes')
+                            ->default('-')
+                            ->columnSpan(2)
+                            ->maxLength(255),
+                        TextArea::make('outstanding')
+                            ->default('-')
+                            ->columnSpan(2)
+                            ->maxLength(255),
                     ]),
             ]);
     }
