@@ -2,33 +2,35 @@
 
 namespace App\Filament\Resources;
 
+use Closure;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Villa;
 use App\Enums\Category;
-use Filament\Forms\Form;
 use Filament\Forms\Get;
-use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Support\RawJs;
 use Filament\Resources\Resource;
+use Filament\Tables\Grouping\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Support\Enums\Alignment;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\CheckboxList;
 use App\Filament\Resources\VillaResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Closure;
-use Filament\Tables\Grouping\Group;
 
 class VillaResource extends Resource
 {
@@ -157,50 +159,63 @@ class VillaResource extends Resource
                 // Management Agreements
                 Section::make('Management Agreement')
                     ->relationship('agreement')
+                    ->columnSpanFull()
                     ->schema([
                         Select::make('signed_copy')
                             ->default(false)
                             ->label('Signed Copy')
-                            ->columnSpan(2)
                             ->options([
                                 true => 'Yes',
                                 false => 'No'
                             ]),
-                        Select::make('marketing_agent_sites')
-                            ->label('Marketing Agent Sites')
-                            ->columnSpan(8)
-                            ->options([
-                                'agentA' => 'Agent A',
-                                'agentB' => 'Agent B',
-                                'agentC' => 'Agent C',
-                            ]),
-                        TextInput::make('marketing_commision')
-                            ->maxLength(255)
-                            ->columnSpan(4)
-                            ->default('-'),
-                        TextInput::make('booking_commision')
-                            ->maxLength(255)
-                            ->columnSpan(4)
-                            ->default('-'),
-                            //->mask(RawJs::make('$money($input, `,`)'))
-                            //->stripCharacters('.')
-                            //->numeric(),
                         Select::make('fix_monthly_fee')
-                            ->columnSpan(4)
                             ->default(false)
                             ->label('Fix Monthly Fee')
                             ->options([
                                 true => 'Yes',
                                 false => 'No'
                             ]),
-                        TextInput::make('agent_fee')
-                            ->default('-')
-                            ->mask(RawJs::make('$money($input, `,`)'))
-                            ->stripCharacters('.'),
-                        TextInput::make('other_commision')
-                            ->maxLength(255)
-                            ->columnSpan(3)
-                            ->default('-'),
+                        // Select::make('marketing_agent_sites')
+                        //     ->label('Marketing Agent Sites')
+                        //     ->columnSpan(8)
+                        //     ->options([
+                        //         'agentA' => 'Agent A',
+                        //         'agentB' => 'Agent B',
+                        //         'agentC' => 'Agent C',
+                        //     ]),
+                        CheckboxList::make('marketing_agent_sites')
+                            ->columnSpanFull()
+                            ->options([
+                                'BRHV' => 'BRHV Sites (BVE, AHR, BRHV) (16.5%)',
+                                'BRHV_Global' => 'BRHV Global Network of Third Party Agents (20%)',
+                                'VillaWebsite' => 'Villa Website (16.5%)',
+                                'Airbnb' => 'Airbnb (16.5%)',
+                                'Bookingcom' => 'Booking.com (18%)',
+                                'Agoda' => 'Agoda (18%)',
+                                'Flipkey' => 'Flipkey (To confirm %)',
+                                'Expedia' => 'Expedia (To confirm %)',
+                            ])
+                            ->gridDirection('row')
+                            ->columns(4),                        
+                        // TextInput::make('marketing_commision')
+                        //     ->maxLength(255)
+                        //     ->columnSpan(4)
+                        //     ->default('-'),
+                        // TextInput::make('booking_commision')
+                        //     ->maxLength(255)
+                        //     ->columnSpan(4)
+                        //     ->default('-'),
+                            //->mask(RawJs::make('$money($input, `,`)'))
+                            //->stripCharacters('.')
+                            //->numeric(),
+                        // TextInput::make('agent_fee')
+                        //     ->default('-')
+                        //     ->mask(RawJs::make('$money($input, `,`)'))
+                        //     ->stripCharacters('.'),
+                        // TextInput::make('other_commision')
+                        //     ->maxLength(255)
+                        //     ->columnSpan(3)
+                        //     ->default('-'),
                             //->mask(RawJs::make('$money($input, `,`)'))
                             //->stripCharacters('.'),
                         // FileUpload::make('agreement_document')

@@ -29,16 +29,24 @@
                         <p class="font-medium">{{ $record->address ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">Building Size</p>
-                        <p class="font-medium">{{ $record->building_size ?: '-' }}</p>
+                        <p class="text-gray-500">Villa Manager Name</p>
+                        <p class="font-medium">{{ $record->villa_manager_name ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">Land Size</p>
-                        <p class="font-medium">{{ $record->land_size ?: '-' }}</p>
+                        <p class="text-gray-500">Villa Manager Email</p>
+                        <p class="font-medium">{{ $record->villa_manager_email ?: '-' }}</p>
+                    </div>
+                    <div class="col-span-1 text-start">
+                        <p class="text-gray-500">Villa Manager Contact</p>
+                        <p class="font-medium">{{ $record->villa_manager_contact ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
                         <p class="text-gray-500">Land Owner</p>
                         <p class="font-medium">{{ $record->land_owner ?: '-' }}</p>
+                    </div>
+                    <div class="col-span-1 text-start">
+                        <p class="text-gray-500">Land Size</p>
+                        <p class="font-medium">{{ $record->land_size ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
                         <p class="text-gray-500">Land Certification Number</p>
@@ -50,13 +58,39 @@
                         <p class="font-medium">{{ $record->imb_pbg_number ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
+                        <p class="text-gray-500">XTC Power</p>
+                        <p class="font-medium">{{ $record->xtc_power ?: '-' }}</p>
+                    </div>
+                    <div class="col-span-1 text-start">
+                        <p class="text-gray-500">PLN ID</p>
+                        <p class="font-medium">{{ $record->pln_id ?: '-' }}</p>
+                    </div>
+                    <div class="col-span-1 text-start">
+                        <p class="text-gray-500">For Sale</p>
+                        <p class="font-medium">{{ $record->for_sale ?: '-' }}</p>
+                    </div>
+                    <div class="col-span-1 text-start">
                         <p class="text-gray-500">Licence</p>
                         <p class="font-medium">{{ $record->licence ?: '-' }}</p>
+                    </div>
+                    <div class="col-span-1 text-start">
+                        <p class="text-gray-500">For Sale Link</p>
+                        <p class="font-medium">{{ $record->for_sale_link ?: '-' }}</p>
+                    </div>
+                    <div class="col-span-1 text-start">
+                        <p class="text-gray-500"></p>
+                        <p class="font-medium">
+                        </p>
                     </div>
                     <div class="col-span-1 text-start">
                         <p class="text-gray-500">Rental Date</p>
                         <p class="font-medium">
                             {{ $record->rental_date?->format('d F Y') ?: '-' }}</p>
+                    </div>
+                    <div class="col-span-1 text-start">
+                        <p class="text-gray-500">Lease Date</p>
+                        <p class="font-medium">
+                            {{ $record->lease_date->format('d F Y') ?: '-' }}</p>
                     </div>
                 </div>
 
@@ -189,7 +223,7 @@
                         <p class="text-gray-500">Documents</p>
                         <div class="flex flex-wrap items-center gap-3">
                             @forelse ($record->consultant->documents as $item)
-                                <a class="bg-primary-50 border-primary-500 rounded-full border px-3 py-1 text-xs"
+                                <a class="dark:bg-gray-800 bg-primary-50 border-primary-500 rounded-full border px-3 py-1 text-xs"
                                     href="{{ asset('storage/' . $item) }}" target="_blank"
                                     rel="noopener noreferrer">
                                     {{ str_replace('consultant-documents/', '', $item) }}
@@ -231,4 +265,5 @@
             ],
         }))
     })
+    // location.reload()
 </script>

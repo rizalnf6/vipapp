@@ -26,19 +26,29 @@
             <td align="right">{{ $record->address ?: '-' }}</td>
         </tr>
         <tr>
-            <td style="width: 200px">Building Size</td>
+            <td style="width: 200px">Villa Manager</td>
             <td>:</td>
-            <td align="right">{{ $record->building_size ?: '-' }}</td>
+            <td align="right">{{ $record->villa_manager_name ?: '-' }}</td>
         </tr>
         <tr>
-            <td style="width: 200px">Land Size</td>
+            <td style="width: 200px">Villa Manager Email</td>
             <td>:</td>
-            <td align="right">{{ $record->land_size ?: '-' }}</td>
+            <td align="right">{{ $record->villa_manager_email ?: '-' }}</td>
+        </tr>
+        <tr>
+            <td style="width: 200px">Villa Manager Contact</td>
+            <td>:</td>
+            <td align="right">{{ $record->villa_manager_contact ?: '-' }}</td>
         </tr>
         <tr>
             <td style="width: 200px">Land Owner</td>
             <td>:</td>
             <td align="right">{{ $record->land_owner ?: '-' }}</td>
+        </tr>
+        <tr>
+            <td style="width: 200px">Land Size</td>
+            <td>:</td>
+            <td align="right">{{ $record->land_size ?: '-' }}</td>
         </tr>
         <tr>
             <td style="width: 200px">Land Certification Number</td>
@@ -51,9 +61,34 @@
             <td align="right">{{ $record->imb_pbg_number ?: '-' }}</td>
         </tr>
         <tr>
+            <td style="width: 200px">XTC Power</td>
+            <td>:</td>
+            <td align="right">{{ $record->xtc_power ?: '-' }}</td>
+        </tr>
+        <tr>
+            <td style="width: 200px">PLN ID</td>
+            <td>:</td>
+            <td align="right">{{ $record->pln_id ?: '-' }}</td>
+        </tr>
+        <tr>
+            <td style="width: 200px">For Sale</td>
+            <td>:</td>
+            <td align="right">{{ $record->for_sale ?: '-' }}</td>
+        </tr>
+        <tr>
             <td style="width: 200px">Licence</td>
             <td>:</td>
             <td align="right">{{ $record->licence ?: '-' }}</td>
+        </tr>
+        <tr>
+            <td style="width: 200px">For Sale Link</td>
+            <td>:</td>
+            <td align="right">{{ $record->for_sale_link ?: '-' }}</td>
+        </tr>
+        <tr>
+            <td style="width: 200px">Lease Date</td>
+            <td>:</td>
+            <td align="right">{{ $record->rental_date?->format('d F Y') ?: '-' }}</td>
         </tr>
         <tr>
             <td style="width: 200px">Rental Date</td>
@@ -118,9 +153,19 @@
             <td align="right">{{ $record->agreement->signed_copy ? 'Yes' : 'No' }}</td>
         </tr>
         <tr>
+            <td style="width: 200px">Marketing Agent</td>
+            <td>:</td>
+            <td align="right">{{ $record->agreement->marketing_agent_sites ?: '-' }}</td>
+        </tr>
+        <tr>
             <td style="width: 200px">Booking commision</td>
             <td>:</td>
             <td align="right">{{ $record->agreement->booking_commision ?: '-' }}</td>
+        </tr>
+        <tr>
+            <td style="width: 200px">Marketing commision</td>
+            <td>:</td>
+            <td align="right">{{ $record->agreement->marketing_commision ?: '-' }}</td>
         </tr>
         <tr>
             <td style="width: 200px">Fix monthly fee</td>
@@ -162,6 +207,11 @@
             <td align="right">{{ $record->insurance->insurance_amount ?: '-' }}</td>
         </tr>
         <tr>
+            <td style="width: 200px">Insured Policy Cost</td>
+            <td>:</td>
+            <td align="right">{{ $record->insurance->insured_policy_cost ?: '-' }}</td>
+        </tr>
+        <tr>
             <td style="width: 200px">Renewal date</td>
             <td>:</td>
             <td align="right">{{ $record->insurance->renewal_date?->format('d F Y') ?: '-' }}</td>
@@ -174,6 +224,20 @@
             <td style="width: 200px">Consultant used</td>
             <td>:</td>
             <td align="right">{{ $record->consultant->consultant_used ?: '-' }}</td>
+        </tr>
+    </table>
+
+    <h4 style="margin-bottom: 4px">Notes and Outstanding</h4>
+    <table style="width: 100%">
+        <tr>
+            <td style="width: 200px">Notes</td>
+            <td>:</td>
+            <td align="right">{{ $record->others?->notes ?: '-' }}</td>
+        </tr>
+        <tr>
+            <td style="width: 200px">Outstanding</td>
+            <td>:</td>
+            <td align="right">{{ $record->others?->outstanding ?: '-' }}</td>
         </tr>
     </table>
 </body>
