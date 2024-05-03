@@ -1,5 +1,6 @@
 <x-filament-panels::page>
-    <div x-data="view_villa">
+    
+    <div x-data="view_villa ()" x-on:villas-load.window="villas= $event.detail.villas">
         <center class="space-y-6">
             <ul class="flex w-full items-center justify-center">
                 <template x-for="(item, index)  in listItem">
@@ -146,7 +147,6 @@
                         <p class="font-medium">{{ $record->tax->registered_pe ? 'Yes' : 'No' }}</p>
                     </div>
                 </div>
-
                 {{-- Agreement --}}
                 <div class="grid w-full grid-cols-1 gap-3 md:grid-cols-2" x-show="current == 3">
                     <div class="col-span-1 text-start">
@@ -155,7 +155,23 @@
                     </div>
                     <div class="col-span-1 text-start">
                         <p class="text-gray-500">Marketing Agent Sites</p>
-                        <p class="font-medium">{{ $record->agreement->marketing_agent_sites ?: '-' }}</p>
+                        <p class="font-medium">
+                @php
+                $array = ['BRHV' => 'BRHV Sites (BVE, AHR, BRHV) (16.5%)',
+                                'BRHV_Global' => 'BRHV Global Network of Third Party Agents (20%)',
+                                'VillaWebsite' => 'Villa Website (16.5%)',
+                                'Airbnb' => 'Airbnb (16.5%)',
+                                'Bookingcom' => 'Booking.com (18%)',
+                                'Agoda' => 'Agoda (18%)',
+                                'Flipkey' => 'Flipkey (To confirm %)',
+                                'Expedia' => 'Expedia (To confirm %)',59];
+                @endphp
+                <ul>
+                        @foreach (json_decode($record->agreement->marketing_agent_sites) as $item)
+                        <li>{{ $array[$item] ?? 'Not found :)' }}</li>
+                        @endforeach
+                </ul>
+            </p>
                     </div>
                     <div class="col-span-1 text-start">
                         <p class="text-gray-500">Booking commision</p>
@@ -234,7 +250,6 @@
                         </div>
                     </div>
                 </div>
-                
                 {{-- Others --}}
                 <div class="grid w-full grid-cols-1 gap-3" x-show="current==6">
                     <div class="col-span-1 text-start">
@@ -251,8 +266,14 @@
     </div>
 </x-filament-panels::page>
 <script>
+    let event = new CustomEvent("items-load", {
+    detail: {
+        items: []
+    }
+    });
+    window.dispatchEvent(event),
     document.addEventListener('alpine:init', () => {
-        Alpine.data('view_villa', () => ({
+        Alpine.data('view_villa', () => ( {
             current: 0,
             listItem: [
                 "Villa Detail",
@@ -264,6 +285,7 @@
                 "Others",
             ],
         }))
+        
     })
     // location.reload()
 </script>
