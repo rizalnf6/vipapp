@@ -30,15 +30,15 @@ class ListVillas extends ListRecords
     public function getTabs(): array
     {
         $tabs = [
-            'all' => Tab::make()
-                ->label('All')
-                ->modifyQueryUsing(fn (Builder $query) => $query->whereNull('deleted_at')),
             'management' => Tab::make()
-                ->label('Management')
+                ->label('Managed')
                 ->modifyQueryUsing(fn (Builder $query) => $query->whereNull('deleted_at')->where('category', Category::Management)),
             'non_management' => Tab::make()
                 ->label('Exclusively Marketed Villas')
                 ->modifyQueryUsing(fn (Builder $query) => $query->whereNull('deleted_at')->where('category', Category::NonManagement)),
+            'all' => Tab::make()
+                ->label('All')
+                ->modifyQueryUsing(fn (Builder $query) => $query->whereNull('deleted_at')),
         ];
 
         if (!getUser()->hasRole(Roles::USER)) {

@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('land_owner_name')->nullable();
             $table->string('land_owner_address')->nullable();
             $table->string('land_owner_phone_number')->nullable();
+            $table->string('land_owner_email')->nullable();
+            $table->string('land_owner_ktp')->nullable();
             $table->string('villa_manager_name')->nullable();
             $table->string('villa_manager_contact')->nullable();
             $table->string('villa_manager_email')->nullable();
@@ -30,6 +32,7 @@ return new class extends Migration
             $table->string('pln_id');
             $table->string('xtc_power');
             $table->string('licence');
+            $table->string('consultant_villa');
             $table->boolean('for_sale');
             $table->string('for_sale_link')->nullable();
             $table->date('rental_date');

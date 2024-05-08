@@ -18,6 +18,7 @@ return new class extends Migration
             $table->boolean('registered_pe')->nullable();
             $table->string('land_build_status')->nullable();
             $table->string('oss_status')->nullable();
+            $table->string('consultant_tax')->nullable();
             $table->timestamps();
         });
     }

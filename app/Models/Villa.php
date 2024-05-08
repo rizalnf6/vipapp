@@ -16,6 +16,7 @@ class Villa extends Model
     protected $casts = [
         'rental_date' => 'datetime',
         'lease_date' => 'datetime',
+        'land_owner_ktp' => 'array',
     ];
 
     public function owner(): HasOne

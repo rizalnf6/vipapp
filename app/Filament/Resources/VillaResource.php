@@ -67,13 +67,23 @@ class VillaResource extends Resource
                         Textinput::make('land_owner')
                             ->default('-')
                             ->columnSpanFull(),
-                        DatePicker::make('rental_date')
-                            ->default(now())
-                            ->required(),
-                        DatePicker::make('lease_date')
-                            ->default(now())
-                            ->required(),
                         TextInput::make('land_owner_phone_number')
+                            ->label('Land Owner Phone Number')
+                            ->default('-')
+                            ->maxLength(255),
+                        TextInput::make('land_owner_email')
+                            ->label('Land Owner Email')
+                            ->default('-')
+                            ->maxLength(255),
+                        FileUpload::make('land_owner_ktp')
+                            ->label('Land Owner KTP')
+                            ->disk('public')
+                            ->multiple()
+                            ->downloadable()
+                            ->preserveFilenames()
+                            ->directory('ktp-files'),
+                        TextInput::make('land_owner_address')
+                            ->label('Land Owner Address')
                             ->default('-')
                             ->maxLength(255),
                         TextInput::make('building_size')
@@ -86,9 +96,11 @@ class VillaResource extends Resource
                             ->default('-')
                             ->maxLength(255),
                         TextInput::make('land_certification_number')
+                            ->label('Land Certificate Number')
                             ->default('-')
                             ->maxLength(255),
                         TextInput::make('imb_pbg_number')
+                            ->label('IMB PBG')
                             ->default('-')
                             ->maxLength(255),
                         TextInput::make('xtc_power')
@@ -107,7 +119,19 @@ class VillaResource extends Resource
                         TextInput::make('for_sale_link')
                             ->default('-')
                             ->maxLength(255)
-                            ->columnSpan(3),
+                            ->columnSpan(2),
+                        DatePicker::make('lease_date')
+                            ->label('Lease Start Date')
+                            ->default(now())
+                            ->required(),
+                        DatePicker::make('rental_date')
+                            ->label('Lease End Date')
+                            ->default(now())
+                            ->required(),
+                        TextInput::make('consultant_villa')
+                            ->default('-')
+                            ->columnSpan(2)
+                            ->maxLength(255),
                     ]),
                 Section::make('Owner')
                     ->columns(2)
@@ -125,6 +149,7 @@ class VillaResource extends Resource
                         Textarea::make('passport_detail')
                             ->default('-'),
                         FileUpload::make('passport_file')
+                            ->label('Passport on File')
                             ->disk('public')
                             ->multiple()
                             ->downloadable()
@@ -135,10 +160,12 @@ class VillaResource extends Resource
                     ->relationship('tax')
                     ->schema([
                         TextInput::make('pb_tax')
+                            ->label('PB1 Tax')
                             ->default('-')
                             ->columnSpan(12)
                             ->maxLength(255),
                         TextArea::make('land_build_status')
+                            ->label('Land and Building Tax')
                             ->default('-')
                             ->columnSpan(12)
                             ->maxLength(255),
@@ -162,6 +189,7 @@ class VillaResource extends Resource
                     ->columnSpanFull()
                     ->schema([
                         Select::make('signed_copy')
+                        ->columnSpan(2)
                             ->default(false)
                             ->label('Signed Copy')
                             ->options([
@@ -169,60 +197,62 @@ class VillaResource extends Resource
                                 false => 'No'
                             ]),
                         Select::make('fix_monthly_fee')
+                        ->columnSpan(2)
                             ->default(false)
                             ->label('Fix Monthly Fee')
                             ->options([
                                 true => 'Yes',
                                 false => 'No'
-                            ]),
-                        // Select::make('marketing_agent_sites')
-                        //     ->label('Marketing Agent Sites')
-                        //     ->columnSpan(8)
-                        //     ->options([
-                        //         'agentA' => 'Agent A',
-                        //         'agentB' => 'Agent B',
-                        //         'agentC' => 'Agent C',
-                        //     ]),
-                        CheckboxList::make('marketing_agent_sites')
-                            ->columnSpanFull()
-                            ->options([
-                                'BRHV' => 'BRHV Sites (BVE, AHR, BRHV) (16.5%)',
-                                'BRHV_Global' => 'BRHV Global Network of Third Party Agents (20%)',
-                                'VillaWebsite' => 'Villa Website (16.5%)',
-                                'Airbnb' => 'Airbnb (16.5%)',
-                                'Bookingcom' => 'Booking.com (18%)',
-                                'Agoda' => 'Agoda (18%)',
-                                'Flipkey' => 'Flipkey (To confirm %)',
-                                'Expedia' => 'Expedia (To confirm %)',
-                            ])
-                            ->gridDirection('row')
-                            ->columns(4),                        
+                            ]),                      
                         // TextInput::make('marketing_commision')
                         //     ->maxLength(255)
                         //     ->columnSpan(4)
                         //     ->default('-'),
-                        // TextInput::make('booking_commision')
-                        //     ->maxLength(255)
-                        //     ->columnSpan(4)
-                        //     ->default('-'),
+                        TextInput::make('booking_commision')
+                            ->label('Booking Commision')
+                            ->maxLength(255)
+                            ->columnSpan(2)
+                            ->default('-'),
                             //->mask(RawJs::make('$money($input, `,`)'))
                             //->stripCharacters('.')
                             //->numeric(),
-                        // TextInput::make('agent_fee')
-                        //     ->default('-')
-                        //     ->mask(RawJs::make('$money($input, `,`)'))
-                        //     ->stripCharacters('.'),
+                        TextInput::make('agent_fee')
+                            ->label('Managing Agent Fee')
+                            ->default('-')
+                            ->columnSpan(2)
+                            ->mask(RawJs::make('$money($input, `,`)'))
+                            ->stripCharacters('.'),
                         // TextInput::make('other_commision')
                         //     ->maxLength(255)
-                        //     ->columnSpan(3)
+                        //     ->columnSpan(6)
                         //     ->default('-'),
                             //->mask(RawJs::make('$money($input, `,`)'))
                             //->stripCharacters('.'),
-                        // FileUpload::make('agreement_document')
-                        //     ->disk('public')
-                        //     ->multiple()
-                        //     ->directory('agreement-documents')
-                        //     ->preserveFilenames(),
+                        CheckboxList::make('marketing_agent_sites')
+                        ->required()
+                        ->columnSpan(8)
+                        ->options([
+                            'BRHV' => 'BRHV Sites (BVE, AHR, BRHV) (16.5%)',
+                            'BRHV_Global' => 'BRHV Global Network of Third Party Agents (20%)',
+                            'VillaWebsite' => 'Villa Website (16.5%)',
+                            'Airbnb' => 'Airbnb (16.5%)',
+                            'Bookingcom' => 'Booking.com (18%)',
+                            'Agoda' => 'Agoda (18%)',
+                            'Flipkey' => 'Flipkey (To confirm %)',
+                            'Expedia' => 'Expedia (To confirm %)',
+                        ])
+                        ->gridDirection('row')
+                        ->columns(4),  
+                        FileUpload::make('agreement_document')
+                            ->maxSize(200 * 1024)
+                            ->label('Agreement Document')
+                            ->multiple()
+                            ->moveFiles()
+                            ->columnSpan(8)
+                            ->disk('public')
+                            ->directory('agreement-documents')
+                            ->downloadable()
+                            ->preserveFilenames(),
 
                     ]),
                 Section::make('Insurance')
@@ -257,10 +287,10 @@ class VillaResource extends Resource
                     ->relationship('consultant')
                     ->columns(2)
                     ->schema([
-                        TextInput::make('consultant_used')
-                            ->default('-')
-                            ->columnSpan(8)
-                            ->maxLength(255),
+                        // TextInput::make('consultant_used')
+                        //     ->default('-')
+                        //     ->columnSpan(8)
+                        //     ->maxLength(255),
                         FileUpload::make('documents')
                             ->maxSize(200 * 1024)
                             ->label('List of Document on File')

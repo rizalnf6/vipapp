@@ -8,6 +8,6 @@ use BenSampo\Enum\Enum;
 
 final class Category extends Enum
 {
-    const Management = 'Management';
+    const Management = 'Managed';
     const NonManagement = 'Exclusively Marketed Villas';
 }

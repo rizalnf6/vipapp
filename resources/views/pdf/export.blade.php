@@ -46,9 +46,34 @@
             <td align="right">{{ $record->land_owner ?: '-' }}</td>
         </tr>
         <tr>
+            <td style="width: 200px">Land Owner Phone Number</td>
+            <td>:</td>
+            <td align="right">{{ $record->land_owner_phone_number ?: '-' }}</td>
+        </tr>
+        <tr>
+            <td style="width: 200px">Land Owner Email</td>
+            <td>:</td>
+            <td align="right">{{ $record->land_owner_email ?: '-' }}</td>
+        </tr>
+        <tr>
+            <td style="width: 200px">Land Owner Address</td>
+            <td>:</td>
+            <td align="right">{{ $record->land_owner_address ?: '-' }}</td>
+        </tr>
+        <tr>
+            <td style="width: 200px">Building Size</td>
+            <td>:</td>
+            <td align="right">{{ $record->building_size ?: '-' }}</td>
+        </tr>
+        <tr>
             <td style="width: 200px">Land Size</td>
             <td>:</td>
             <td align="right">{{ $record->land_size ?: '-' }}</td>
+        </tr>
+        <tr>
+            <td style="width: 200px">Licenses</td>
+            <td>:</td>
+            <td align="right">{{ $record->licence ?: '-' }}</td>
         </tr>
         <tr>
             <td style="width: 200px">Land Certification Number</td>
@@ -76,22 +101,17 @@
             <td align="right">{{ $record->for_sale ?: '-' }}</td>
         </tr>
         <tr>
-            <td style="width: 200px">Licence</td>
-            <td>:</td>
-            <td align="right">{{ $record->licence ?: '-' }}</td>
-        </tr>
-        <tr>
             <td style="width: 200px">For Sale Link</td>
             <td>:</td>
             <td align="right">{{ $record->for_sale_link ?: '-' }}</td>
         </tr>
         <tr>
-            <td style="width: 200px">Lease Date</td>
+            <td style="width: 200px">Lease Start Date</td>
             <td>:</td>
             <td align="right">{{ $record->rental_date?->format('d F Y') ?: '-' }}</td>
         </tr>
         <tr>
-            <td style="width: 200px">Rental Date</td>
+            <td style="width: 200px">Lease End Date</td>
             <td>:</td>
             <td align="right">{{ $record->rental_date?->format('d F Y') ?: '-' }}</td>
         </tr>
@@ -153,9 +173,25 @@
             <td align="right">{{ $record->agreement->signed_copy ? 'Yes' : 'No' }}</td>
         </tr>
         <tr>
-            <td style="width: 200px">Marketing Agent</td>
+            <td style="width: 200px">Marketing Agent Sites</td>
             <td>:</td>
-            <td align="right">{{ $record->agreement->marketing_agent_sites ?: '-' }}</td>
+            <td align="right">
+            @php
+                $array = ['BRHV' => 'BRHV Sites (BVE, AHR, BRHV) (16.5%)',
+                                'BRHV_Global' => 'BRHV Global Network of Third Party Agents (20%)',
+                                'VillaWebsite' => 'Villa Website (16.5%)',
+                                'Airbnb' => 'Airbnb (16.5%)',
+                                'Bookingcom' => 'Booking.com (18%)',
+                                'Agoda' => 'Agoda (18%)',
+                                'Flipkey' => 'Flipkey (To confirm %)',
+                                'Expedia' => 'Expedia (To confirm %)',59];
+                @endphp
+                <ul>
+                        @foreach (json_decode($record->agreement->marketing_agent_sites) as $item)
+                        <li>{{ $array[$item] ?? 'Not found :)' }}</li>
+                        @endforeach
+                </ul>
+            </td>
         </tr>
         <tr>
             <td style="width: 200px">Booking commision</td>

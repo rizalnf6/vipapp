@@ -46,11 +46,51 @@
                         <p class="font-medium">{{ $record->land_owner ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
+                        <p class="text-gray-500">Land Owner Phone Number</p>
+                        <p class="font-medium">{{ $record->land_owner_phone_number ?: '-' }}</p>
+                    </div>
+                    <div class="col-span-1 text-start">
+                        <p class="text-gray-500">Land Owner Email</p>
+                        <p class="font-medium">{{ $record->land_owner_email ?: '-' }}</p>
+                    </div>
+                    <div class="col-span-1 text-start">
+                        <p class="text-gray-500">Land Owner Adress</p>
+                        <p class="font-medium">{{ $record->land_owner_address ?: '-' }}</p>
+                    </div>
+                    <div class="col-span-1 text-start">
+                        <p class="text-gray-500">Land Owner KTP</p>
+                        <div class="flex flex-wrap items-center gap-3">
+                            
+                        @if($record->villas)
+                            @forelse ($record->land_owner_ktp as $item)
+                                <a class="dark:bg-gray-800 bg-primary-50 border-primary-500 rounded-full border px-3 py-1 text-xs"
+                                href="{{ asset('storage/' . $item) }}" target="_blank"
+                                rel="noopener noreferrer">
+                                {{ str_replace('ktp-files/', '', $item) }}
+                                </a>
+                            @empty
+                                <p class="font-medium">-</p>
+                            @endforelse
+                            @else
+                            <p>No KTP assigned</p>
+                        @endif
+
+                        </div>
+                    </div>
+                    <div class="col-span-1 text-start">
+                        <p class="text-gray-500">Building Size</p>
+                        <p class="font-medium">{{ $record->building_size ?: '-' }}</p>
+                    </div>
+                    <div class="col-span-1 text-start">
                         <p class="text-gray-500">Land Size</p>
                         <p class="font-medium">{{ $record->land_size ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">Land Certification Number</p>
+                        <p class="text-gray-500">Licences</p>
+                        <p class="font-medium">{{ $record->licence ?: '-' }}</p>
+                    </div>
+                    <div class="col-span-1 text-start">
+                        <p class="text-gray-500">Land Certificate Number</p>
                         <p class="font-medium">
                             {{ $record->land_certification_number ?: '-' }}</p>
                     </div>
@@ -71,27 +111,26 @@
                         <p class="font-medium">{{ $record->for_sale ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">Licence</p>
-                        <p class="font-medium">{{ $record->licence ?: '-' }}</p>
-                    </div>
-                    <div class="col-span-1 text-start">
                         <p class="text-gray-500">For Sale Link</p>
                         <p class="font-medium">{{ $record->for_sale_link ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
+                        <p class="text-gray-500">Consultant Used</p>
+                        <p class="font-medium">{{ $record->consultant_villa ?: '-' }}</p>
+                    </div>
+                    <div class="col-span-1 text-start">
                         <p class="text-gray-500"></p>
-                        <p class="font-medium">
-                        </p>
+                        <p class="font-medium"></p>
                     </div>
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">Rental Date</p>
-                        <p class="font-medium">
-                            {{ $record->rental_date?->format('d F Y') ?: '-' }}</p>
-                    </div>
-                    <div class="col-span-1 text-start">
-                        <p class="text-gray-500">Lease Date</p>
+                        <p class="text-gray-500">Lease Start Date</p>
                         <p class="font-medium">
                             {{ $record->lease_date->format('d F Y') ?: '-' }}</p>
+                    </div>
+                    <div class="col-span-1 text-start">
+                        <p class="text-gray-500">Lease End Date</p>
+                        <p class="font-medium">
+                            {{ $record->rental_date?->format('d F Y') ?: '-' }}</p>
                     </div>
                 </div>
 
@@ -114,7 +153,7 @@
                         <p class="font-medium">{{ $record->owner->passport_detail ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">Passport File</p>
+                        <p class="text-gray-500">Passport on File</p>
                         <div class="flex flex-wrap items-center gap-3">
                             @forelse ($record->owner->passport_file as $item)
                                 <a class="bg-primary-50 border-primary-500 rounded-full border px-3 py-1 text-xs"
@@ -131,11 +170,11 @@
                 {{-- Tax --}}
                 <div class="grid w-full grid-cols-1 gap-3 md:grid-cols-2" x-show="current == 2">
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">PB Tax</p>
+                        <p class="text-gray-500">PB1 Tax</p>
                         <p class="font-medium">{{ $record->tax->pb_tax ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">Land Build Status</p>
+                        <p class="text-gray-500">Land and Building Tax</p>
                         <p class="font-medium">{{ $record->tax->land_build_status ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
@@ -150,53 +189,67 @@
                 {{-- Agreement --}}
                 <div class="grid w-full grid-cols-1 gap-3 md:grid-cols-2" x-show="current == 3">
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">Signed copy</p>
-                        <p class="font-medium">{{ $record->agreement->signed_copy ? 'Yes' : 'No' }}</p>
+                        <p class="text-gray-500">Signed Copy</p>
+                        <p class="font-medium">{{ $record->agreement?->signed_copy ? 'Yes' : 'No' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
                         <p class="text-gray-500">Marketing Agent Sites</p>
                         <p class="font-medium">
-                @php
-                $array = ['BRHV' => 'BRHV Sites (BVE, AHR, BRHV) (16.5%)',
-                                'BRHV_Global' => 'BRHV Global Network of Third Party Agents (20%)',
-                                'VillaWebsite' => 'Villa Website (16.5%)',
-                                'Airbnb' => 'Airbnb (16.5%)',
-                                'Bookingcom' => 'Booking.com (18%)',
-                                'Agoda' => 'Agoda (18%)',
-                                'Flipkey' => 'Flipkey (To confirm %)',
-                                'Expedia' => 'Expedia (To confirm %)',59];
-                @endphp
-                <ul>
-                        @foreach (json_decode($record->agreement->marketing_agent_sites) as $item)
-                        <li>{{ $array[$item] ?? 'Not found :)' }}</li>
-                        @endforeach
-                </ul>
-            </p>
+                        @php
+                        $array = ['BRHV' => 'BRHV Sites (BVE, AHR, BRHV) (16.5%)',
+                                        'BRHV_Global' => 'BRHV Global Network of Third Party Agents (20%)',
+                                        'VillaWebsite' => 'Villa Website (16.5%)',
+                                        'Airbnb' => 'Airbnb (16.5%)',
+                                        'Bookingcom' => 'Booking.com (18%)',
+                                        'Agoda' => 'Agoda (18%)',
+                                        'Flipkey' => 'Flipkey (To confirm %)',
+                                        'Expedia' => 'Expedia (To confirm %)',59];
+                        @endphp
+                        <ul>
+                                @foreach (json_decode($record->agreement->marketing_agent_sites) as $item)
+                                <li>{{ $array[$item] ?? 'Not found' }}</li>
+                                @endforeach
+                        </ul>
+                        </p>
                     </div>
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">Booking commision</p>
-                        <p class="font-medium">{{ $record->agreement->booking_commision ?: '-' }}</p>
+                        <p class="text-gray-500">Booking Commision</p>
+                        <p class="font-medium">{{ $record->agreement?->booking_commision ?: '-' }}</p>
                     </div>
-                    <div class="col-span-1 text-start">
+                    <!-- <div class="col-span-1 text-start">
                         <p class="text-gray-500">Marketing Commision</p>
-                        <p class="font-medium">{{ $record->agreement->marketing_commision ?: '-' }}</p>
-                    </div>
+                        <p class="font-medium">{{ $record->agreement?->marketing_commision ?: '-' }}</p>
+                    </div> -->
                     <div class="col-span-1 text-start">
                         <p class="text-gray-500">Fix monthly fee</p>
-                        <p class="font-medium">{{ $record->agreement->fix_monthly_fee ? 'Yes' : 'No' }}</p>
+                        <p class="font-medium">{{ $record->agreement?->fix_monthly_fee ? 'Yes' : 'No' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">Agent fee</p>
-                        <p class="font-medium">{{ $record->agreement->agent_fee ?: '-' }}</p>
+                        <p class="text-gray-500">Managing Agent Fee</p>
+                        <p class="font-medium">{{ $record->agreement?->agent_fee ?: '-' }}</p>
                     </div>
-                    <div class="col-span-1 text-start">
+                    <!-- <div class="col-span-1 text-start">
                         <p class="text-gray-500">Other commision</p>
-                        <p class="font-medium">{{ $record->agreement->other_commision ?: '-' }}</p>
-                    </div>
+                        <p class="font-medium">{{ $record->agreement?->other_commision ?: '-' }}</p>
+                    </div> -->
                     <div class="col-span-1 text-start">
                         <p class="text-gray-500">Document</p>
                         <div class="flex flex-wrap items-center gap-3">
                             
+                        @if($record->agreements)
+                        @forelse ($record->agreements->agreement_document as $item)
+                            <a class="dark:bg-gray-800 bg-primary-50 border-primary-500 rounded-full border px-3 py-1 text-xs"
+                            href="{{ asset('storage/' . $item) }}" target="_blank"
+                            rel="noopener noreferrer">
+                            {{ str_replace('agreement-documents/', '', $item) }}
+                            </a>
+                        @empty
+                            <p class="font-medium">-</p>
+                        @endforelse
+                        @else
+                        <p>No aggrement document assigned</p>
+                        @endif
+
                         </div>
                     </div>
                 </div>
@@ -204,53 +257,53 @@
                 {{-- Insurance --}}
                 <div class="grid w-full grid-cols-1 gap-3 md:grid-cols-2" x-show="current == 4">
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">Company name</p>
+                        <p class="text-gray-500">Company Name</p>
                         <p class="font-medium">{{ $record->insurance?->company_name ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">Policy number</p>
-                        <p class="font-medium">{{ $record->insurance->policy_number ?: '-' }}</p>
+                        <p class="text-gray-500">Policy Number</p>
+                        <p class="font-medium">{{ $record->insurance?->policy_number ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">Insurance name</p>
-                        <p class="font-medium">{{ $record->insurance->insurance_name ?: '-' }}</p>
+                        <p class="text-gray-500">Name Insured</p>
+                        <p class="font-medium">{{ $record->insurance?->insurance_name ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">Insurance amount</p>
-                        <p class="font-medium">{{ $record->insurance->insurance_amount ?: '-' }}</p>
+                        <p class="text-gray-500">Sum Insured</p>
+                        <p class="font-medium">{{ $record->insurance?->insurance_amount ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">Insured policy cost</p>
-                        <p class="font-medium">{{ $record->insurance->insured_policy_cost ?: '-' }}</p>
+                        <p class="text-gray-500">Insured & Policy Cost</p>
+                        <p class="font-medium">{{ $record->insurance?->insured_policy_cost ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
                         <p class="text-gray-500">Renewal date</p>
-                        <p class="font-medium">{{ $record->insurance->renewal_date?->format('d F Y') ?: '-' }}</p>
+                        <p class="font-medium">{{ $record->insurance?->renewal_date?->format('d F Y') ?: '-' }}</p>
                     </div>
                 </div>
                 
                 {{-- Documents --}}
                 <div class="grid w-full grid-cols-1 gap-3" x-show="current==5">
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">Consultant used</p>
-                        <p class="font-medium">{{ $record->consultant->consultant_used ?: '-' }}</p>
-                    </div>
-                    <div class="col-span-1 text-start">
                         <p class="text-gray-500">Documents</p>
                         <div class="flex flex-wrap items-center gap-3">
-                            @forelse ($record->consultant->documents as $item)
-                                <a class="dark:bg-gray-800 bg-primary-50 border-primary-500 rounded-full border px-3 py-1 text-xs"
-                                    href="{{ asset('storage/' . $item) }}" target="_blank"
-                                    rel="noopener noreferrer">
-                                    {{ str_replace('consultant-documents/', '', $item) }}
-                                </a>
-                            @empty
-                                <p class="font-medium">-</p>
-                            @endforelse
+                        @if($record->consultants)
+                        @forelse ($record->consultants->documents as $item)
+                            <a class="dark:bg-gray-800 bg-primary-50 border-primary-500 rounded-full border px-3 py-1 text-xs"
+                            href="{{ asset('storage/' . $item) }}" target="_blank"
+                            rel="noopener noreferrer">
+                            {{ str_replace('consultant-documents/', '', $item) }}
+                            </a>
+                        @empty
+                            <p class="font-medium">-</p>
+                        @endforelse
+                        @else
+                        <p>No documents assigned</p>
+                        @endif
                         </div>
                     </div>
                 </div>
-                {{-- Others --}}
+                {{-- Notes --}}
                 <div class="grid w-full grid-cols-1 gap-3" x-show="current==6">
                     <div class="col-span-1 text-start">
                         <p class="text-gray-500">Notes</p>
@@ -282,7 +335,7 @@
                 "Management Agreement",
                 "Insurance",
                 "Documents",
-                "Others",
+                "Notes",
             ],
         }))
         
