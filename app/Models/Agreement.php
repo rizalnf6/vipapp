@@ -15,6 +15,7 @@ class Agreement extends Model
     protected $casts = [
         'signed_copy' => 'boolean',
         'fix_monthly_fee' => 'boolean',
+        'marketing_agent_sites' => 'array',
         'agreement_document' => 'array'
     ];
 

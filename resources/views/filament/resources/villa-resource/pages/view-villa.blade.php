@@ -58,23 +58,17 @@
                         <p class="font-medium">{{ $record->land_owner_address ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">Land Owner KTP</p>
+                       
+                    <p class="text-gray-500">Land Owner KTP</p>
                         <div class="flex flex-wrap items-center gap-3">
-                            
-                        @if($record->villas)
-                            @forelse ($record->land_owner_ktp as $item)
-                                <a class="dark:bg-gray-800 bg-primary-50 border-primary-500 rounded-full border px-3 py-1 text-xs"
-                                href="{{ asset('storage/' . $item) }}" target="_blank"
-                                rel="noopener noreferrer">
-                                {{ str_replace('ktp-files/', '', $item) }}
+                        @forelse ($record->land_owner_ktp as $item)
+                                <a class="bg-primary-50 border-primary-500 rounded-full border px-3 py-1 text-xs"
+                                    href="{{ asset('storage/' . $item) }}" target="_blank" rel="noopener noreferrer">
+                                    {{ str_replace('ktp-files/', '', $item) }}
                                 </a>
                             @empty
                                 <p class="font-medium">-</p>
-                            @endforelse
-                            @else
-                            <p>No KTP assigned</p>
-                        @endif
-
+                        @endforelse
                         </div>
                     </div>
                     <div class="col-span-1 text-start">
@@ -206,7 +200,7 @@
                                         'Expedia' => 'Expedia (To confirm %)',59];
                         @endphp
                         <ul>
-                                @foreach (json_decode($record->agreement->marketing_agent_sites) as $item)
+                                @foreach ($record->agreement->marketing_agent_sites as $item)
                                 <li>{{ $array[$item] ?? 'Not found' }}</li>
                                 @endforeach
                         </ul>
