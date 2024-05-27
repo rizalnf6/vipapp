@@ -52,4 +52,6 @@ class ViewVilla extends ViewRecord
                 ->send();
         }
     }
+
+    //woi aku lanjut belajar dirumah
 }
