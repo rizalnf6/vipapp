@@ -54,7 +54,7 @@
                         <p class="font-medium">{{ $record->land_owner_email ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">Land Owner Adress</p>
+                        <p class="text-gray-500">Land Owner Address</p>
                         <p class="font-medium">{{ $record->land_owner_address ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
@@ -84,12 +84,12 @@
                         <p class="font-medium">{{ $record->licence ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">Land Certificate Number</p>
+                        <p class="text-gray-500">Land Certificate No.</p>
                         <p class="font-medium">
                             {{ $record->land_certification_number ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">IMB PBG</p>
+                        <p class="text-gray-500">IMB/PBG</p>
                         <p class="font-medium">{{ $record->imb_pbg_number ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
@@ -109,7 +109,7 @@
                         <p class="font-medium">{{ $record->for_sale_link ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">Consultant Used</p>
+                        <p class="text-gray-500">Consultants Used</p>
                         <p class="font-medium">{{ $record->consultant_villa ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
@@ -172,7 +172,7 @@
                         <p class="font-medium">{{ $record->tax->land_build_status ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">OSS Status</p>
+                        <p class="text-gray-500">OSS Registered</p>
                         <p class="font-medium">{{ $record->tax->oss_status ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
@@ -207,7 +207,7 @@
                         </p>
                     </div>
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">Booking Commision</p>
+                        <p class="text-gray-500">Booking Commission</p>
                         <p class="font-medium">{{ $record->agreement?->booking_commision ?: '-' }}</p>
                     </div>
                     <!-- <div class="col-span-1 text-start">
@@ -267,7 +267,7 @@
                         <p class="font-medium">{{ $record->insurance?->insurance_amount ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">Insured & Policy Cost</p>
+                        <p class="text-gray-500">Policy Cost</p>
                         <p class="font-medium">{{ $record->insurance?->insured_policy_cost ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
