@@ -109,13 +109,13 @@ class VillaResource extends Resource
                         TextInput::make('pln_id')
                             ->default('-')
                             ->maxLength(255),
-                        Select::make('for_sale')
-                            ->label('For Sale')
-                            ->default(false)
-                            ->options([
-                                true => 'Yes',
-                                false => 'No'
-                            ]),
+                        // Select::make('for_sale')
+                        //     ->label('For Sale')
+                        //     ->default(false)
+                        //     ->options([
+                        //         true => 'Yes',
+                        //         false => 'No'
+                        //     ]),
                         TextInput::make('for_sale_link')
                             ->default('-')
                             ->maxLength(255)
@@ -337,6 +337,7 @@ class VillaResource extends Resource
                 //     ->searchable(),
                 TextColumn::make('address')
                     ->label('Villa Address')
+                    ->alignment(Alignment::Center)
                     ->searchable(),
                 TextColumn::make('owner.name')
                     ->alignment(Alignment::Center)

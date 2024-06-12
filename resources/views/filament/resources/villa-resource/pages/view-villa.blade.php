@@ -101,20 +101,12 @@
                         <p class="font-medium">{{ $record->pln_id ?: '-' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">For Sale</p>
-                        <p class="font-medium">{{ $record->for_sale ?: '-' }}</p>
-                    </div>
-                    <div class="col-span-1 text-start">
                         <p class="text-gray-500">For Sale Link</p>
-                        <p class="font-medium">{{ $record->for_sale_link ?: '-' }}</p>
+                        <p class="font-medium">{{ $record->for_sale_link ?: 'N/A' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
                         <p class="text-gray-500">Consultants Used</p>
                         <p class="font-medium">{{ $record->consultant_villa ?: '-' }}</p>
-                    </div>
-                    <div class="col-span-1 text-start">
-                        <p class="text-gray-500"></p>
-                        <p class="font-medium"></p>
                     </div>
                     <div class="col-span-1 text-start">
                         <p class="text-gray-500">Lease Start Date</p>
@@ -126,6 +118,10 @@
                         <p class="font-medium">
                             {{ $record->rental_date?->format('d F Y') ?: '-' }}</p>
                     </div>
+                    <!-- <div class="col-span-1 text-start">
+                        <p class="text-gray-500">For Sale</p>
+                        <p class="font-medium">{{ $record->for_sale ?: '-' }}</p>
+                    </div> -->
                 </div>
 
                 {{-- Owner --}}
@@ -215,7 +211,7 @@
                         <p class="font-medium">{{ $record->agreement?->marketing_commision ?: '-' }}</p>
                     </div> -->
                     <div class="col-span-1 text-start">
-                        <p class="text-gray-500">Fix monthly fee</p>
+                        <p class="text-gray-500">Fixed monthly fee</p>
                         <p class="font-medium">{{ $record->agreement?->fix_monthly_fee ? 'Yes' : 'No' }}</p>
                     </div>
                     <div class="col-span-1 text-start">
