@@ -64,7 +64,7 @@ class VillaResource extends Resource
                         Textinput::make('villa_manager_contact')
                             ->default('-')
                             ->columnSpan(2),
-                        Textinput::make('land_owner')
+                        Textinput::make('land_owner_name')
                             ->default('-')
                             ->columnSpanFull(),
                         TextInput::make('land_owner_phone_number')

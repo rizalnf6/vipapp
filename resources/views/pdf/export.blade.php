@@ -176,20 +176,39 @@
             <td style="width: 200px">Marketing Agent Sites</td>
             <td>:</td>
             <td align="right">
-            @php
-                $array = ['BRHV' => 'BRHV Sites (BVE, AHR, BRHV) (16.5%)',
-                                'BRHV_Global' => 'BRHV Global Network of Third Party Agents (20%)',
-                                'VillaWebsite' => 'Villa Website (16.5%)',
-                                'Airbnb' => 'Airbnb (16.5%)',
-                                'Bookingcom' => 'Booking.com (18%)',
-                                'Agoda' => 'Agoda (18%)',
-                                'Flipkey' => 'Flipkey (To confirm %)',
-                                'Expedia' => 'Expedia (To confirm %)',59];
+                @php
+                    // Sample array to map marketing agent sites to display names
+                    $array = [
+                        'BRHV' => 'BRHV Sites (BVE, AHR, BRHV)',
+                        'BRHV_Global' => 'BRHV Global Network of Third Party Agents',
+                        'VillaWebsite' => 'Villa Website',
+                        'Airbnb' => 'Airbnb',
+                        'Bookingcom' => 'Booking.com',
+                        'Agoda' => 'Agoda',
+                        'Flipkey' => 'Flipkey',
+                        'Expedia' => 'Expedia'
+                    ];
+
+                    // Get the marketing agent sites from the record
+                    $marketingAgentSites = $record->agreement->marketing_agent_sites;
+
+                    // Check if marketingAgentSites is a JSON string and decode it if necessary
+                    if (is_string($marketingAgentSites)) {
+                        $marketingAgentSites = json_decode($marketingAgentSites, true);
+                    }
+
+                    // Normalize the keys in $array for case-insensitive matching
+                    $normalizedArray = array_change_key_case($array, CASE_LOWER);
                 @endphp
+
                 <ul>
-                        @foreach (json_decode($record->agreement->marketing_agent_sites) as $item)
-                        <li>{{ $array[$item] ?? 'Not found :)' }}</li>
-                        @endforeach
+                    @foreach ($marketingAgentSites as $item)
+                        @php
+                            // Normalize the item by trimming spaces and converting to lowercase
+                            $normalizedItem = trim(strtolower($item));
+                        @endphp
+                        <li>{{ $normalizedArray[$normalizedItem] ?? 'Not found :' }}</li>
+                    @endforeach
                 </ul>
             </td>
         </tr>
